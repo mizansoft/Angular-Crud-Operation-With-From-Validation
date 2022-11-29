@@ -1,0 +1,71 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-sm-4">
+        <!--  this is the form area  -->
+        <form>
+          <div class="mb-3">
+            <input type="text" placeholder="Enter your ID" class="form-control" aria-describedby="emailHelp" id="pid" name="pid" [(ngModel)]="pid"
+              #pidOne="ngModel">
+          </div>
+          <div class="mb-3">
+            <input type="text" placeholder="Enter your product Name" class="form-control" aria-describedby="emailHelp" id="pname" name="pname" [(ngModel)]="pname"
+              #pnameOne="ngModel" required minlength="5" pattern="^[A-Za-z]+@[A-Za-z]+\.[A-Za-z]{2,4}$">
+              <ul class="text-danger list-unstyled" *ngIf="pnameOne.dirty && pnameOne.invalid">
+                <li *ngIf="pnameOne.errors?.['required']">
+                  Product name must be neded 
+                </li>
+                <li *ngIf="pnameOne.errors?.['pattern']">
+                  
+                </li>
+                <li *ngIf="pnameOne.errors?.['minlength']">
+                  Product name must be 4 carecter
+                  {{ pnameOne.errors?.['minlength'].requiredLength }} 
+                </li>
+              </ul>
+          </div>
+          <div class="mb-3">
+            <input type="text" placeholder="Enter your product stock" class="form-control" aria-describedby="emailHelp" id="pstock" name="pstock"
+              [(ngModel)]="pstock" #pstockOne="ngModel">
+          </div>
+          <div class="mb-3">
+            <input type="text" placeholder="Enter your product price" class="form-control" aria-describedby="emailHelp" id="pprice" name="pprice"
+              [(ngModel)]="pprice" #ppriceOne="ngModel">
+          </div>
+          <div class="mb-3">
+            <input type="text" placeholder="Enter your product price" class="form-control" aria-describedby="emailHelp" id="pdiscount" name="pdiscount"
+              [(ngModel)]="pdiscount" #pdiscountOne="ngModel">
+          </div>
+          <button type="submit" class="btn btn-primary m-2 " (click)="addProduct()" >Submit</button>
+          <button type="button" class="btn btn-danger m-2" (click)="deleteProduct(pidOne.value)" >Delete</button>
+          <button type="button" class="btn btn-success m-2" (click)="updateProduct(pidOne.value)" >Update</button>
+        </form>
+    </div>
+    <div class="col">
+      <!-- this is the table section  -->
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">SL</th>
+            <th scope="col">PRODUCT ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">STOCK</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">DISCOUNT</th>
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of pArray; let i = index">
+            <th scope="row" >{{i+1}}</th>
+            <td >{{ s.pId }}</td>
+            <td>{{ s.pName }}</td>
+            <td >{{ s.pStock }}</td>
+            <td >{{ s.pPrice }}</td>
+            <td [ngClass]="{'red':s.pDiscount!>=1 && s.pDiscount!<=20, 'green':s.pDiscount !>=20 && s.pDiscount !<=40 , 'pink':s.pDiscount !>=40 && s.pDiscount !<=60}" >{{ s.pDiscount }}%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
